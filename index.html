@@ -2,8 +2,15 @@
 <link href="https://fonts.googleapis.com/css?family=Muli|Roboto" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="my-style.css">
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
-<div>
-  font-size: <input id='font-size' value='20'>
+<div id='main-ui'>
+  <div class='row'>
+    <a href="https://github.com/JesseAldridge/font-table">
+      https://github.com/JesseAldridge/font-table
+    </a>
+  </div>
+  <div class='row'>
+    font-size: <input id='font-size' value='20'>
+  </div>
 </div>
 <div id='main-content'>
 </div>
@@ -37,7 +44,12 @@
       generate_tr(
         {font_family: 'Arial', content: 'Weight:', font_weight: 300, font_size: 12},
         function(font_weight) {
-          return {font_family: 'Arial', content: font_weight, font_weight: 300, font_size: 12};
+          return {
+            font_family: 'Arial',
+            content: font_weight,
+            font_weight: font_weight,
+            font_size: 12
+          };
         }
       )
     ];

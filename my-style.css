@@ -1,3 +1,11 @@
+#main-ui {
+  font-family: Muli;
+}
+
+#main-ui .row {
+  margin-bottom: 10px;
+}
+
 table, td, th {
     border: 1px solid #ddd;
     text-align: left;
