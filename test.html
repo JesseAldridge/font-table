@@ -1,0 +1,65 @@
+<html>
+<link href="https://fonts.googleapis.com/css?family=Muli|Roboto" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="my-style.css">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+<div>
+  font-size: <input id='font-size'>
+</div>
+<div id='main-content'>
+</div>
+
+<script>
+
+function cell_to_html(cell) {
+  return (
+    `<td style='font-family: ${cell.font_family}; font-weight: ${cell.font_weight}'>\n` +
+    `  ${cell.content}\n` +
+    '</td>\n'
+  )
+}
+
+function generate_tr(initial_cell, build_cell) {
+  let tds = [initial_cell];
+  for(font_weight = 100; font_weight < 1000; font_weight += 200)
+    tds.push(build_cell(font_weight));
+
+  tds = tds.map(function(cell) { return '  ' + cell_to_html(cell); });
+  return `<tr>\n${tds.join('\n')}</tr>`;
+}
+
+function main() {
+  const trs = [
+    generate_tr(
+      {font_family: 'Arial', content: 'font_weight:', font_weight: 300},
+      function(font_weight) {
+        return {font_family: 'Arial', content: font_weight, font_weight: 300};
+      }
+    )
+  ];
+
+  const font_families = [
+    'Arial',
+    'Helvetica Neu',
+    'Verdana',
+    'Times New Roman',
+    'Times',
+    'Courier New',
+    'Courier',
+    'Georgia',
+    'Palatino',
+    'Garamond',
+    'Comic Sans MS',
+    'Trebuchet MS',
+    'Arial Black',
+    'Impact',
+    'Muli',
+    'Bookman Old Style',
+    'Roboto',
+  ];
+
+  $('#main-content').html(trs.join('\n'));
+}
+
+window.addEventListener("load", main, false);
+</script>
+</html>
