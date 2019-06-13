@@ -13,7 +13,7 @@ class Cell:
 
 def generate_tr(initial_cell, build_cell):
   tds = [initial_cell]
-  tds += [build_cell(font_weight) for font_weight in range(100, 1000, 100)]
+  tds += [build_cell(font_weight) for font_weight in range(100, 1000, 200)]
   tds = ['  ' + cell.to_html() for cell in tds]
   html = textwrap.dedent('''
     <tr>
@@ -22,7 +22,7 @@ def generate_tr(initial_cell, build_cell):
   ''')
   return html.format('\n'.join(tds))
 
-def generate_table():
+def generate_table(cell_content):
   trs = [
     generate_tr(
       Cell(font_family='Arial', content='font_weight:', font_weight=300),
@@ -46,14 +46,18 @@ def generate_table():
     'Impact',
     'Muli',
     'Bookman Old Style',
+    'Roboto',
   ]:
     trs.append(generate_tr(
       Cell(font_family=font_family, content=font_family, font_weight=300),
-      lambda font_weight: Cell(font_family=font_family, content='foo', font_weight=font_weight)
+      lambda font_weight: Cell(
+        font_family=font_family, content=cell_content, font_weight=font_weight
+      )
     ))
 
   return textwrap.dedent('''
     <html>
+    <link href="https://fonts.googleapis.com/css?family=Muli|Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="my-style.css">
     <table>
       {}
@@ -62,7 +66,8 @@ def generate_table():
   ''').format('\n'.join(trs))
 
 def main():
-  out_html = generate_table()
+  cell_content = '<button class="watched-button">WATCHED</button>'
+  out_html = generate_table(cell_content)
   with open('index.html', 'w') as f:
     f.write(out_html)
 
