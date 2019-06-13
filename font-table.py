@@ -47,15 +47,17 @@ def generate_table():
     ))
 
   return textwrap.dedent('''
+    <html>
     <link rel="stylesheet" type="text/css" href="my-style.css">
     <table>
       {}
     </table>
+    </html>
   ''').format('\n'.join(trs))
 
 def main():
   out_html = generate_table()
-  with open('table.html', 'w') as f:
+  with open('readme.html', 'w') as f:
     f.write(out_html)
 
 if __name__ == '__main__':
