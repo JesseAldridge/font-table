@@ -1,187 +1,77 @@
-
 <html>
 <link href="https://fonts.googleapis.com/css?family=Muli|Roboto" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="my-style.css">
-<table>
-  
-<tr>
-  <td style='font-family: Arial; font-weight: 300'>font_weight:</td>
-  <td style='font-family: Arial; font-weight: 300'>100</td>
-  <td style='font-family: Arial; font-weight: 300'>300</td>
-  <td style='font-family: Arial; font-weight: 300'>500</td>
-  <td style='font-family: Arial; font-weight: 300'>700</td>
-  <td style='font-family: Arial; font-weight: 300'>900</td>
-</tr>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+<div>
+  font-size: <input id='font-size'>
+</div>
+<div id='main-content'>
+</div>
 
+<script>
 
-<tr>
-  <td style='font-family: Arial; font-weight: 300'>Arial</td>
-  <td style='font-family: Arial; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
+function cell_to_html(cell) {
+  return (
+    `<td style='font-family: ${cell.font_family}; font-weight: ${cell.font_weight}'>\n` +
+    `  ${cell.content}\n` +
+    '</td>\n'
+  )
+}
 
+function generate_tr(initial_cell, build_cell) {
+  let tds = [initial_cell];
+  for(font_weight = 100; font_weight < 1000; font_weight += 200)
+    tds.push(build_cell(font_weight));
 
-<tr>
-  <td style='font-family: Helvetica Neu; font-weight: 300'>Helvetica Neu</td>
-  <td style='font-family: Helvetica Neu; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Helvetica Neu; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Helvetica Neu; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Helvetica Neu; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Helvetica Neu; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
+  tds = tds.map(function(cell) { return '  ' + cell_to_html(cell); });
+  return `<tr>\n${tds.join('\n')}</tr>`;
+}
 
+function generate_table(cell_content) {
+  const trs = [
+    generate_tr(
+      {font_family: 'Arial', content: 'font_weight:', font_weight: 300},
+      function(font_weight) {
+        return {font_family: 'Arial', content: font_weight, font_weight: 300};
+      }
+    )
+  ]
 
-<tr>
-  <td style='font-family: Verdana; font-weight: 300'>Verdana</td>
-  <td style='font-family: Verdana; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Verdana; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Verdana; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Verdana; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Verdana; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
+  const font_families = [
+    'Arial',
+    'Helvetica Neu',
+    'Verdana',
+    'Times New Roman',
+    'Times',
+    'Courier New',
+    'Courier',
+    'Georgia',
+    'Palatino',
+    'Garamond',
+    'Comic Sans MS',
+    'Trebuchet MS',
+    'Arial Black',
+    'Impact',
+    'Muli',
+    'Bookman Old Style',
+    'Roboto',
+  ];
 
+  font_families.forEach(function(font_family) {
+    trs.push(generate_tr(
+      {font_family: font_family, content: font_family, font_weight: 300},
+      function(font_weight) {
+        return { font_family: font_family, content: cell_content, font_weight: font_weight };
+      }
+    ))
+  });
+}
 
-<tr>
-  <td style='font-family: Times New Roman; font-weight: 300'>Times New Roman</td>
-  <td style='font-family: Times New Roman; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times New Roman; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times New Roman; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times New Roman; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times New Roman; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
+function main() {
+  const cell_content = '<button class="watched-button">WATCHED</button>'
+  const out_html = generate_table(cell_content)
+  $('#main-content').html(out_html)
+}
 
-
-<tr>
-  <td style='font-family: Times; font-weight: 300'>Times</td>
-  <td style='font-family: Times; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Times; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Courier New; font-weight: 300'>Courier New</td>
-  <td style='font-family: Courier New; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier New; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier New; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier New; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier New; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Courier; font-weight: 300'>Courier</td>
-  <td style='font-family: Courier; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Courier; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Georgia; font-weight: 300'>Georgia</td>
-  <td style='font-family: Georgia; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Georgia; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Georgia; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Georgia; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Georgia; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Palatino; font-weight: 300'>Palatino</td>
-  <td style='font-family: Palatino; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Palatino; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Palatino; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Palatino; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Palatino; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Garamond; font-weight: 300'>Garamond</td>
-  <td style='font-family: Garamond; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Garamond; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Garamond; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Garamond; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Garamond; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Comic Sans MS; font-weight: 300'>Comic Sans MS</td>
-  <td style='font-family: Comic Sans MS; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Comic Sans MS; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Comic Sans MS; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Comic Sans MS; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Comic Sans MS; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Trebuchet MS; font-weight: 300'>Trebuchet MS</td>
-  <td style='font-family: Trebuchet MS; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Trebuchet MS; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Trebuchet MS; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Trebuchet MS; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Trebuchet MS; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Arial Black; font-weight: 300'>Arial Black</td>
-  <td style='font-family: Arial Black; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial Black; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial Black; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial Black; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Arial Black; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Impact; font-weight: 300'>Impact</td>
-  <td style='font-family: Impact; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Impact; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Impact; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Impact; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Impact; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Muli; font-weight: 300'>Muli</td>
-  <td style='font-family: Muli; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Muli; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Muli; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Muli; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Muli; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Bookman Old Style; font-weight: 300'>Bookman Old Style</td>
-  <td style='font-family: Bookman Old Style; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Bookman Old Style; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Bookman Old Style; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Bookman Old Style; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Bookman Old Style; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-
-<tr>
-  <td style='font-family: Roboto; font-weight: 300'>Roboto</td>
-  <td style='font-family: Roboto; font-weight: 100'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Roboto; font-weight: 300'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Roboto; font-weight: 500'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Roboto; font-weight: 700'><button class="watched-button">WATCHED</button></td>
-  <td style='font-family: Roboto; font-weight: 900'><button class="watched-button">WATCHED</button></td>
-</tr>
-
-</table>
-</html>
+window.addEventListener("load", main(), false);
+</script>
