@@ -57,7 +57,7 @@ def generate_table():
 
 def main():
   out_html = generate_table()
-  with open('readme.html', 'w') as f:
+  with open('index.html', 'w') as f:
     f.write(out_html)
 
 if __name__ == '__main__':
