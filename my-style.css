@@ -14,6 +14,7 @@ th, td {
 .watched-button {
   font-family: inherit;
   font-weight: inherit;
+  font-size: inherit;
 
   background: #E70E79;
   color: white;
