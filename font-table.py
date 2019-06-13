@@ -11,8 +11,10 @@ class Cell:
       self.font_family, self.font_weight, self.content
     )
 
-def generate_tr(build_cell):
-  tds = ['  ' + build_cell(font_weight).to_html() for font_weight in range(100, 1000, 100)]
+def generate_tr(initial_cell, build_cell):
+  tds = [initial_cell]
+  tds += [build_cell(font_weight) for font_weight in range(100, 1000, 100)]
+  tds = ['  ' + cell.to_html() for cell in tds]
   html = textwrap.dedent('''
     <tr>
     {}
@@ -22,7 +24,10 @@ def generate_tr(build_cell):
 
 def generate_table():
   trs = [
-    generate_tr(lambda font_weight: Cell(font_family='Arial', content=font_weight, font_weight=300))
+    generate_tr(
+      Cell(font_family='Arial', content='font_weight:', font_weight=300),
+      lambda font_weight: Cell(font_family='Arial', content=font_weight, font_weight=300)
+    )
   ]
   for font_family in [
     'Arial',
@@ -43,6 +48,7 @@ def generate_table():
     'Bookman Old Style',
   ]:
     trs.append(generate_tr(
+      Cell(font_family=font_family, content=font_family, font_weight=300),
       lambda font_weight: Cell(font_family=font_family, content='foo', font_weight=font_weight)
     ))
 
